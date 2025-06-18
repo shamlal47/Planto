@@ -1,5 +1,7 @@
+import Footer from "@/components/footer";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
+import BestO2Section from "@/components/O2Section";
 import TrendingPlants from "@/components/Trending";
 
 
@@ -21,9 +23,10 @@ export default function Home() {
 
       {/* Content */}
       <div className="relative z-10">
-        <Navbar />
         <Hero />
         <TrendingPlants/>
+        <BestO2Section/>
+        <Footer/>
       </div>
     </div>
   )
