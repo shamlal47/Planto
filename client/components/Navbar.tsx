@@ -1,5 +1,6 @@
 import { Search, ShoppingBag, Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export default function Navbar() {
   return (
@@ -31,7 +32,10 @@ export default function Navbar() {
           <Search className="h-5 w-5" />
         </Button>
         <Button variant="ghost" size="icon" className="text-white hover:text-green-400">
+           <Link href={"/cart"} className="">
           <ShoppingBag className="h-5 w-5" />
+          </Link>
+         
         </Button>
         <Button variant="ghost" size="icon" className="text-white hover:text-green-400 md:hidden">
           <Menu className="h-5 w-5" />
