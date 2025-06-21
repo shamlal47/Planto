@@ -1,6 +1,6 @@
-import {Route} from 'express'
+import { Router } from "express";
 
-const orderRouter = Route();
+const orderRouter = Router();
 orderRouter.post('/create', (req, res) => {
     res.status(201).json({ message: "Order created successfully" });
 });

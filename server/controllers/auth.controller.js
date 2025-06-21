@@ -1,7 +1,8 @@
 import { User } from '../models/user.model.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import { JWT_SECRET } from '../config.js';
+import { JWT_SECRET } from '../config/env.js';
+
 
 // Login controller
 export const login = async (req, res) => {
@@ -105,4 +106,13 @@ export const signup = async (req, res) => {
             error: error.message
         });
     }
+};
+
+// Signout controller
+export const signout = (req, res) => {
+    // Invalidate the token on the client side
+    res.status(200).json({
+        success: true,
+        message: 'User signed out successfully'
+    });
 };

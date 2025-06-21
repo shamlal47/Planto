@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
-import { JWT_SECRET } from '../config.js';
+import { JWT_SECRET } from '../config/env.js';
 import { User } from '../models/user.model.js';
 
-export const autherize = async (req, res, next) => {
+export const authorize = async (req, res, next) => {
     const token = req.headers.authorization?.split(' ')[1];
 
     if (!token) {

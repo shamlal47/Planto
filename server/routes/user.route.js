@@ -1,6 +1,6 @@
-import { Route } from "express";
+import { Router } from "express";
 
-const userRouter = Route();
+const userRouter = Router();
 userRouter.get('/', (req, res) => {
     res.status(200).json({ message: "User profile fetched successfully" });
 });
