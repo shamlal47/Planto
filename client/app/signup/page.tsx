@@ -2,10 +2,52 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { signupUser } from "@/lib/auth";
+
 export default function SignUpPage() {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle signup logic here
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await signupUser(formData);
+      // Store token in localStorage or other state management solution
+      localStorage.setItem("token", response.data.token);
+      router.push("/"); // Redirect to home page
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
   }
 
   return (
@@ -21,10 +63,11 @@ export default function SignUpPage() {
             <div className="space-y-2">
               <label htmlFor="firstName" className="block text-gray-300">
                 First Name
-              </label>
-              <input
+              </label>              <input
                 type="text"
                 id="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
                 className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500"
                 placeholder="John"
                 required
