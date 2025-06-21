@@ -1,6 +1,7 @@
 import { User } from '../models/user.model.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import { JWT_SECRET } from '../config.js';
 
 // Login controller
 export const login = async (req, res) => {
@@ -28,7 +29,7 @@ export const login = async (req, res) => {
         // Generate JWT token
         const token = jwt.sign(
             { userId: user._id },
-            process.env.JWT_SECRET,
+            JWT_SECRET,
             { expiresIn: '24h' }
         );
 
@@ -56,7 +57,7 @@ export const login = async (req, res) => {
 // Signup controller
 export const signup = async (req, res) => {
     try {
-        const { firstName, lastName, email, password } = req.body;
+        const { name, email, password } = req.body;
 
         // Check if user already exists
         const existingUser = await User.findOne({ email });
@@ -73,7 +74,7 @@ export const signup = async (req, res) => {
 
         // Create new user
         const user = await User.create({
-            name: `${firstName} ${lastName}`,
+            name,
             email,
             password: hashedPassword
         });

@@ -5,6 +5,7 @@ import connectToMongoDB from './database/mongoDb.js';
 import authRouter from './routes/auth.route.js';
 import userRouter from './routes/user.route.js';
 import orderRouter from './routes/order.route.js';
+import errorHandler from './middleware/error.middleware.js';
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,7 @@ app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/order', orderRouter);
 
+app.use(errorHandler)
 
 
 app.listen(PORT, async () => {

@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../config.js';
+import { User } from '../models/user.model.js';
 
-export const autherize = (req, res, next) => {
+export const autherize = async (req, res, next) => {
     const token = req.headers.authorization?.split(' ')[1];
 
     if (!token) {
@@ -13,6 +14,13 @@ export const autherize = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
+        const user = await User.findById(decoded.userId);
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'unauthorized user'
+            });
+        }
         req.user = decoded; // Attach user info to request object
         next(); // Proceed to the next middleware or route handler
     } catch (error) {
