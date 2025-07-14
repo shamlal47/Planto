@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { chatWithAI } from "../controllers/ai.controller.js";
 
-const aiResponse = Router();
+const AiRouter = Router();
 
-aiResponse.post('/chat', chatWithAI);
+AiRouter.post('/prompt', chatWithAI);
+
+export default AiRouter;
